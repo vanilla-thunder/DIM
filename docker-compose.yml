@@ -4,8 +4,6 @@ services:
   webpack:
     container_name: dim-webpack
     image: node:18
-    ports:
-      - 8080:8080
     working_dir: /usr/src/app
     command: >
       bash -c "git config --global --add safe.directory /usr/src/app && corepack enable && pnpm install --frozen-lockfile --prefer-offline && pnpm start"
@@ -16,11 +14,9 @@ services:
     volumes:
       - .:/usr/src/app
       - ./config/:/usr/src/app
-      - node_modules:/usr/src/app/node_modules
-
-volumes:
-  node_modules: {}
+      - ./node_modules:/usr/src/app/node_modules
 
 networks:
-  dim:
-    name: dim
+  default:
+    name: web
+    external: true
